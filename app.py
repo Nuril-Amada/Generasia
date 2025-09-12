@@ -3,6 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import plotly.express as px
+import requests
+from io import StringIO
 
 st.set_page_config(page_title="Dashboard Angka Partisipasi Sekolah", layout="wide")
 
@@ -62,7 +64,17 @@ def load_excel(path):
         sheets[name] = df
     return sheets
 
-default_path = "./data/ESC.xlsx"
+ def load_data_from_github(raw_url):
+        response = requests.get(raw_url)
+        if response.status_code == 200:
+            return pd.read_csv(StringIO(response.text))
+        else:
+            st.error(f"Failed to load data from {raw_url}. Status code: {response.status_code}")
+            return None
+
+data_url = "https://github.com/Nuril-Amada/Generasia/raw/refs/heads/main/ESC.xlsx"
+    default_path = load_data_from_github(data_url)
+
 try:
     all_sheets = load_excel(default_path)
 except Exception:
@@ -600,5 +612,6 @@ with col_content:
 
 
         
+
 
 
