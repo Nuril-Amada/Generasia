@@ -62,7 +62,7 @@ def load_excel(path):
         sheets[name] = df
     return sheets
 
-default_path = "ESC.xlsx"
+default_path = "data/ESC.xlsx"
 try:
     all_sheets = load_excel(default_path)
 except Exception:
@@ -600,3 +600,4 @@ with col_content:
 
 
         
+
