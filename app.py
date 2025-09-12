@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import plotly.express as px
+import os
 
 st.set_page_config(page_title="Dashboard Angka Partisipasi Sekolah", layout="wide")
 
@@ -41,8 +42,12 @@ with col_nav:
         st.session_state.page = "Perguruan Tinggi"
 
 # --- LOAD DATA ---
+default_path = os.path.join("data", "ESC.xlsx")
 @st.cache_data
 def load_excel(path):
+    if not os.path.exists(path):
+        st.error(f"File '{path}' tidak ditemukan. Pastikan file sudah di-upload ke repo.")
+        st.stop()
     sheets = pd.read_excel(path, sheet_name=None)
 
     for name, df in sheets.items():
@@ -62,12 +67,7 @@ def load_excel(path):
         sheets[name] = df
     return sheets
 
-default_path = "data/ESC.xlsx"
-try:
-    all_sheets = load_excel(default_path)
-except Exception:
-    st.error("File 'ESC.xlsx' tidak ditemukan.")
-    st.stop()
+all_sheets = load_excel(default_path)
 
 # --- KPI CARD ---
 def kpi_card(col, title, value, color="#f8f9fa"):
@@ -600,4 +600,5 @@ with col_content:
 
 
         
+
 
