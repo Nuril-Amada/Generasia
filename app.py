@@ -64,13 +64,13 @@ def load_excel(path):
         sheets[name] = df
     return sheets
 
- def load_data_from_github(raw_url):
-     response = requests.get(raw_url)
-     if response.status_code == 200:
-         return pd.read_csv(StringIO(response.text))
-     else:
-         st.error(f"Failed to load data from {raw_url}. Status code: {response.status_code}")
-         return None
+def load_data_from_github(raw_url):
+    response = requests.get(raw_url)
+    if response.status_code == 200:
+        return pd.read_csv(StringIO(response.text))
+    else:
+        st.error(f"Failed to load data from {raw_url}. Status code: {response.status_code}")
+        return None
 
 data_url = "https://github.com/Nuril-Amada/Generasia/raw/refs/heads/main/ESC.xlsx"
 default_path = load_data_from_github(data_url)
@@ -612,6 +612,7 @@ with col_content:
 
 
         
+
 
 
 
